@@ -2,15 +2,19 @@ fin = open('mailbox.txt', 'r')
 lines = fin.readlines()
 fout = open('output1.txt', 'w')
 
-accounts = set()
+accounts = []
+
 for line in lines:
     if line.startswith('From: '):
-        email = line.split()[1]
+        words = line.split()
+        email = words[1]
         account = email.split('@')[0]
-        accounts.add(account)
+        if account not in accounts:
+            accounts.append(account)
 
-sorted_accounts = sorted(list(accounts))
-for acc in sorted_accounts:
+accounts.sort()
+
+for acc in accounts:
     print(acc)
     fout.write(acc + '\n')
 

@@ -2,14 +2,18 @@ fin = open('mailbox.txt', 'r')
 lines = fin.readlines()
 fout = open('output2.txt', 'w')
 
-revisions = set()
+revisions = []
+
 for line in lines:
     if 'Details:' in line and 'rev=' in line:
-        rev = line.split('rev=')[-1].strip()
-        revisions.add(rev)
+        parts = line.split('rev=')
+        rev = parts[1].strip()
+        if rev not in revisions:
+            revisions.append(rev)
 
-sorted_revisions = sorted(list(revisions))
-for rev in sorted_revisions:
+revisions.sort()
+
+for rev in revisions:
     print(rev)
     fout.write(rev + '\n')
 
